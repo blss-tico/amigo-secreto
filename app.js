@@ -3,12 +3,7 @@ let amigoAdicionado;
 let listaDeAmigos = [];
 let inputAdicionarAmigo = document.getElementById('amigo');
 let listaDeAmigosHtml = document.getElementById('listaAmigos');
-
-function atualizaListaDeAmigosTela(amigo) {
-  let li = document.createElement('li');
-  li.textContent = amigo;
-  listaDeAmigosHtml.appendChild(li);
-}
+let listaDeResultadoHtml = document.getElementById('resultado');
 
 function adicionarAmigo() {
   amigoAdicionado = inputAdicionarAmigo.value;
@@ -18,6 +13,26 @@ function adicionarAmigo() {
   }
 
   listaDeAmigos.push(amigoAdicionado);
-  atualizaListaDeAmigosTela(amigoAdicionado);
+  atualizaListaPeloIdNoHtml(amigoAdicionado, listaDeAmigosHtml);
   inputAdicionarAmigo.value = '';
+  inputAdicionarAmigo.focus();
+}
+
+function atualizaListaPeloIdNoHtml(dado, listaHtml) {
+  let li = document.createElement('li');
+  li.textContent = dado;
+  listaHtml.appendChild(li);
+}
+
+function sortearAmigo() {
+  if (listaDeAmigos.length <= 0) {
+    alert('Não há amigos para sortear');
+    return;
+  }
+
+  let numeroSorteio = parseInt(Math.random() * listaDeAmigos.length);
+  atualizaListaPeloIdNoHtml(listaDeAmigos[numeroSorteio], listaDeResultadoHtml);
+  
+  let index = listaDeAmigos.indexOf(listaDeAmigos[numeroSorteio]);
+  if (index > -1) { listaDeAmigos.splice(index, 1); }
 }
