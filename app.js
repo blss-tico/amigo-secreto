@@ -1,49 +1,53 @@
 //O principal objetivo deste desafio é fortalecer suas habilidades em lógica de programação. Aqui você deverá desenvolver a lógica para resolver o problema.
 let amigoAdicionado;
-let listaDeAmigos = [];
+let amigos = [];
 let inputAdicionarAmigo = document.getElementById('amigo');
 let listaDeAmigosHtml = document.getElementById('listaAmigos');
 let listaDeResultadoHtml = document.getElementById('resultado');
 
 // função para adicionar um amigo na lista de amigos
-// após a adição o form é limpo e o foco permanece no form
+// checa se input do form tem nome do amigo, adiciona amigo na lista, limpa o input do form e o coloca o foco no input
 function adicionarAmigo() {
   amigoAdicionado = inputAdicionarAmigo.value;
   if (!amigoAdicionado) { 
-    alert('Digite o nome do seu amigo para o sorteio'); 
+    alert('Por favor, insira um nome.'); 
     return;
   }
 
-  listaDeAmigos.push(amigoAdicionado);
-  atualizaListaPeloIdNoHtml(amigoAdicionado, listaDeAmigosHtml);
+  amigos.push(amigoAdicionado);
+  atualizaListaDeAmigos();
 
   inputAdicionarAmigo.value = '';
   inputAdicionarAmigo.focus();
 }
 
-// função para atualizar uma lista no HTML baseado no id do elemento lista(ul)
-function atualizaListaPeloIdNoHtml(dado, listaHtml) {
-  let li = document.createElement('li');
-  li.textContent = dado;
-  listaHtml.appendChild(li);
+// função para atualizar a lista de amigos no HTML
+function atualizaListaDeAmigos() {
+  listaDeAmigosHtml.innerHTML = "";
+
+  amigos.forEach(amigo => {
+    let li = document.createElement('li');
+    li.textContent = amigo;
+    listaDeAmigosHtml.appendChild(li);
+  });
 }
 
 // função para sortear um amigo
-// após o sorteio aleatório, o amigo é retirado da lista para um novo sorteio
+// checa se há amigos para sortear, sorteia amigo aleatório, retira amigo sorteado da lista
 function sortearAmigo() {
-  if (listaDeAmigos.length <= 0) {
+  if (amigos.length <= 0) {
     alert('Não há amigos para sortear');
     return;
   }
 
-  let numeroSorteio = parseInt(Math.random() * listaDeAmigos.length);
-  let amigoSorteado = listaDeAmigos[numeroSorteio];
-  
-  atualizaListaPeloIdNoHtml(amigoSorteado, listaDeResultadoHtml);
-  retiraAmigoSortadoDaLista(amigoSorteado);  
+  let numeroSorteio = Math.floor(Math.random() * amigos.length);
+  let amigoSorteado = amigos[numeroSorteio];
+  listaDeResultadoHtml.innerHTML = `<li>${amigoSorteado}<li/>`;
+  retiraAmigoSortadoDaLista(amigoSorteado); 
+  atualizaListaDeAmigos(); 
 }
 
 function retiraAmigoSortadoDaLista(amigoSorteado) {
-  let index = listaDeAmigos.indexOf(amigoSorteado);
-  if (index > -1) { listaDeAmigos.splice(index, 1); }
+  let index = amigos.indexOf(amigoSorteado);
+  if (index > -1) { amigos.splice(index, 1); }
 }
