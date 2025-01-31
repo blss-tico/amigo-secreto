@@ -37,17 +37,20 @@ function atualizaListaDeAmigos() {
 function sortearAmigo() {
   if (amigos.length <= 0) {
     alert('Não há amigos para sortear');
+    listaDeResultadoHtml.innerHTML = "";
     return;
   }
 
   let numeroSorteio = Math.floor(Math.random() * amigos.length);
   let amigoSorteado = amigos[numeroSorteio];
+  
+  listaDeResultadoHtml.innerHTML = "";
   listaDeResultadoHtml.innerHTML = `<li>${amigoSorteado}<li/>`;
-  retiraAmigoSortadoDaLista(amigoSorteado); 
-  atualizaListaDeAmigos(); 
+  retiraAmigoSortadoDaLista(amigoSorteado);
 }
 
 function retiraAmigoSortadoDaLista(amigoSorteado) {
   let index = amigos.indexOf(amigoSorteado);
   if (index > -1) { amigos.splice(index, 1); }
+  atualizaListaDeAmigos();
 }
