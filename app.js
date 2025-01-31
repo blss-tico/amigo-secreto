@@ -49,6 +49,8 @@ function sortearAmigo() {
   retiraAmigoSortadoDaLista(amigoSorteado);
 }
 
+// função para retirar amigo sorteado da lista
+// encontra a posicao na lista de amigos, retira da lista, atualiza na tela
 function retiraAmigoSortadoDaLista(amigoSorteado) {
   let index = amigos.indexOf(amigoSorteado);
   if (index > -1) { amigos.splice(index, 1); }
